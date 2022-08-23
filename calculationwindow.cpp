@@ -1,18 +1,13 @@
 #include "calculationwindow.h"
 #include <QInputDialog>
 #include <QIntValidator>
-
+#include <MainWindow>
 
 void    CalculationWindow::startGame()
 {
-    bool ok;
-    m_totalCalculations = QInputDialog::getInt(this, "How many calculations ?",
-                                            "Number of calculations", 1, 1, 100, 1, &ok);
-    if (!ok)
-    {
-        backToMenu();
-        return ;
-    }
+    m_totalCalculations = 5;//QInputDialog::getInt(this, "How many calculations ?",
+                                            //"Number of calculations", 1, 1, 100, 1, &ok);
+
     m_userInput->setVisible(true);
     m_calculationLabel->setVisible(true);
 
@@ -67,7 +62,6 @@ void    CalculationWindow::createButtons()
     m_buttons[0]->setText("Menu");
     m_layout->addWidget(m_buttons[0], Qt::AlignLeft);
     m_buttons[0]->hide();
-    connect(m_buttons[0], &QPushButton::pressed, this, &CalculationWindow::backToMenu);
 
     m_buttons.push_back(new QPushButton(this));
     m_buttons[1]->setText("Play");
@@ -77,20 +71,18 @@ void    CalculationWindow::createButtons()
 }
 
 CalculationWindow::CalculationWindow(QString difficulty, QWidget *parent):
-    QMainWindow(parent),
+    QGroupBox(parent),
     m_parent(parent),
     m_config(difficulty),
     m_nbCalculations(0),
     m_score(0)
 {
-    QWidget*        centralWidget = new QWidget();
-    this->setCentralWidget(centralWidget);
 
     m_layout = new QVBoxLayout();
-    centralWidget->setLayout(m_layout);
+    setLayout(m_layout);
 
-    m_userInput = new QLineEdit(centralWidget);
-    m_userInput->setValidator(new QIntValidator(INT_FAST16_MIN, INT_FAST16_MAX, this));
+    m_userInput = new QLineEdit(this);
+    m_userInput->setValidator(new QIntValidator(INT_MIN, INT_MAX, this));
     m_userInput->hide();
     connect(m_userInput, &QLineEdit::editingFinished, this, &CalculationWindow::handleResult);
 

@@ -25,14 +25,15 @@ public:
     const QString&      getCalculationString() const;
 private:
 
-    void    setResult(const int&, const int&, const char&);
-    void    setCalculationString(const int&, const int&, const char&);
-    char    getOperator() const;
+    void    setResult(const int&, const int&, const QChar&);
+    void    setCalculationString(const int&, const int&, const QChar&);
+    QChar   getOperator() const;
 
     int         m_min;
     int         m_max;
     int         m_result;
 
+    QString     m_operators;
     QString     m_difficulty;
     QString     m_CalculationString;
 

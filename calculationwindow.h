@@ -8,9 +8,11 @@
 #include <QLabel>
 #include <QList>
 #include <QPushButton>
+#include <QGroupBox>
+
 #include "calculationconfig.h"
 
-class CalculationWindow: public QMainWindow
+class CalculationWindow: public QGroupBox
 {
     Q_OBJECT
 
@@ -26,18 +28,19 @@ public:
     void    setMax(int);
     void    setNbCalculations(int);
 
+    void    startGame();
+
 private slots:
     void    handleResult();
     void    restartGame();
     void    backToMenu();
 
 private:
-    void                startGame();
     void                doCalculation();
     void                displayResult();
     void                createButtons();
 
-    QWidget*        m_parent;
+    QWidget*            m_parent;
 
     CalculationConfig   m_config;
 
