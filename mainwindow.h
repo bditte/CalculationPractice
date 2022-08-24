@@ -6,11 +6,15 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 #include <QSignalMapper>
-#include "menubutton.h"
+#include <QPushButton>
+
+#include "calculationwindow.h"
 
 #define MENU_INDEX 0
 #define EASY_INDEX 1
 #define MEDIUM_INDEX 2
+#define CUSTOM_INDEX 3
+
 
 class MainWindow: public QMainWindow {
 
@@ -21,15 +25,16 @@ public:
 
 public slots:
     void            switchWidget(const int&);
+    void            startCustom();
 
 private:
-    void            createButtons(QVBoxLayout*);
+    void            createCustomButtons(QWidget*);
     QWidget*        createMenu();
 
     QVBoxLayout*            m_layout;
-    QList<MenuButton *>     m_buttons;
     QStackedWidget*         m_pagesWidgets;
-    QSignalMapper*          m_sigmapper;
+    CalculationWindow*      m_customWidget;
+    QList<QLineEdit*>       m_userInputs;
 
 };
 

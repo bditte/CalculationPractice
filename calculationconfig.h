@@ -23,7 +23,7 @@ public:
 
     const int&     getMin() const;
     const int&     getMax() const;
-    const int&     getResult() const;
+    const long int&     getResult() const;
 
     void    setMin(const int&);
     void    setMax(const int&);
@@ -37,9 +37,9 @@ private:
     QChar   getOperator() const;
     int     generateRandomNumber() const;
 
-    int         m_min;
-    int         m_max;
-    int         m_result;
+    int                   m_min;
+    int                   m_max;
+    long int              m_result;
 
     QString     m_operators;
     QString     m_difficulty;

@@ -1,5 +1,6 @@
 #include "calculationconfig.h"
 #include <QTextStream>
+#include <QDebug>
 
 QChar    CalculationConfig::getOperator() const
 {
@@ -28,7 +29,7 @@ void    CalculationConfig::setCalculationString(const int &a, const int &b, cons
 
 int    CalculationConfig::generateRandomNumber() const
 {
-    int res = m_min + QRandomGenerator::global()->generate() % m_max;
+    int res = m_min + QRandomGenerator::global()->generate() % (m_max - m_min + 1);
     if (m_allowNegativeNbrs)
     {
         if (QRandomGenerator::global()->generate() % 2)
@@ -55,9 +56,9 @@ void    CalculationConfig::createRandomCalculation()
 }
 
 CalculationConfig::CalculationConfig(const QString& difficulty):
-    m_min(),
-    m_max(),
-    m_operators(),
+    m_min(2),
+    m_max(20),
+    m_operators("+-"),
     m_difficulty(difficulty),
     m_allowNegativeNbrs(false)
 {
@@ -84,10 +85,10 @@ CalculationConfig::CalculationConfig(const int& min, const int& max):
     srand(time(NULL));
 }
 
-const int&      CalculationConfig::getMin() const { return m_min; };
-const int&      CalculationConfig::getMax() const { return m_max; };
-const int&      CalculationConfig::getResult() const { return m_result; }
-const QString&  CalculationConfig::getCalculationString() const { return m_CalculationString; }
+const int&          CalculationConfig::getMin() const { return m_min; };
+const int&          CalculationConfig::getMax() const { return m_max; };
+const long int&     CalculationConfig::getResult() const { return m_result; }
+const QString&      CalculationConfig::getCalculationString() const { return m_CalculationString; }
 
 void    CalculationConfig::setMin(const int& val) { m_min = val; }
 void    CalculationConfig::setMax(const int& val) { m_max = val; }

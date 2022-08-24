@@ -1,11 +1,14 @@
 #include "calculationwindow.h"
 #include <QInputDialog>
 #include <QIntValidator>
+#include <QDebug>
 
 void    CalculationWindow::startGame()
 {
-    m_totalCalculations = 5;//QInputDialog::getInt(this, "How many calculations ?",
-                                            //"Number of calculations", 1, 1, 100, 1, &ok);
+    m_buttons[0]->setVisible(false);
+    m_buttons[1]->setVisible(false);
+    m_nbCalculations = 0;
+    m_score = 0;
 
     m_userInput->setVisible(true);
     m_calculationLabel->setVisible(true);
@@ -16,6 +19,10 @@ void    CalculationWindow::startGame()
 void    CalculationWindow::doCalculation()
 {
     m_config.createRandomCalculation();
+
+    while (m_config.getResult() < INT_MIN && INT_MAX < m_config.getResult())
+        m_config.createRandomCalculation();
+
     m_calculationLabel->setText(m_config.getCalculationString());
 }
 
@@ -37,7 +44,7 @@ void    CalculationWindow::handleResult()
     if (result == m_config.getResult())
         m_score++;
     m_userInput->clear();
-
+    qDebug() << m_nbCalculations << " " << m_totalCalculations << "\n" ;
     if (++m_nbCalculations < m_totalCalculations)
         doCalculation();
     else
@@ -80,6 +87,7 @@ CalculationWindow::CalculationWindow(QString difficulty, QWidget *parent):
     m_nbCalculations(0),
     m_score(0)
 {
+    m_totalCalculations = 5;
 
     m_layout = new QVBoxLayout();
     setLayout(m_layout);
@@ -96,12 +104,16 @@ CalculationWindow::CalculationWindow(QString difficulty, QWidget *parent):
     m_layout->addWidget(m_userInput);
 
     createButtons();
-    startGame();
 }
 
 CalculationWindow::~CalculationWindow()
 {
 
 }
+
+void    CalculationWindow::setMin(int val) { m_config.setMin(val); }
+void    CalculationWindow::setMax(int val) { m_config.setMax(val); }
+void    CalculationWindow::setNbCalculations(int val) { m_totalCalculations = val; }
+
 
 
