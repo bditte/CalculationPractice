@@ -4,9 +4,16 @@
 #include <QString>
 #include <QRandomGenerator>
 
-#define EASY_MIN 0
+#define EASY_MIN 2
 #define EASY_MAX 20
 #define EASY_NB 5
+#define EASY_OPERATORS "+-x"
+
+#define MEDIUM_MIN 2
+#define MEDIUM_MAX 20
+#define MEDIUM_NB 5
+#define MEDIUM_OPERATORS "+-x"
+
 
 class CalculationConfig
 {
@@ -28,6 +35,7 @@ private:
     void    setResult(const int&, const int&, const QChar&);
     void    setCalculationString(const int&, const int&, const QChar&);
     QChar   getOperator() const;
+    int     generateRandomNumber() const;
 
     int         m_min;
     int         m_max;
@@ -36,6 +44,8 @@ private:
     QString     m_operators;
     QString     m_difficulty;
     QString     m_CalculationString;
+
+    bool        m_allowNegativeNbrs;
 
 };
 

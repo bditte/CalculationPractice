@@ -26,12 +26,22 @@ void    CalculationConfig::setCalculationString(const int &a, const int &b, cons
     m_CalculationString = QString::number(a) + " " + op + " " + QString::number(b);
 }
 
+int    CalculationConfig::generateRandomNumber() const
+{
+    int res = m_min + QRandomGenerator::global()->generate() % m_max;
+    if (m_allowNegativeNbrs)
+    {
+        if (QRandomGenerator::global()->generate() % 2)
+            res *= -1;
+    }
+    return res;
+}
+
 void    CalculationConfig::createRandomCalculation()
 {
-    QTextStream out(stdout);
+    int a = generateRandomNumber();
+    int b = generateRandomNumber();
 
-    int a = m_min + QRandomGenerator::global()->generate() % m_max;
-    int b = m_min + QRandomGenerator::global()->generate() % m_max;
     QChar op = getOperator();
 
     if (op == 'x' && m_difficulty == "Easy")
@@ -48,13 +58,21 @@ CalculationConfig::CalculationConfig(const QString& difficulty):
     m_min(),
     m_max(),
     m_operators(),
-    m_difficulty(difficulty)
+    m_difficulty(difficulty),
+    m_allowNegativeNbrs(false)
 {
     if (m_difficulty == "Easy")
     {
         m_min = EASY_MIN;
         m_max = EASY_MAX;
-        m_operators = "+x-";
+        m_operators = EASY_OPERATORS;
+    }
+    else if (m_difficulty == "Medium")
+    {
+        m_min = MEDIUM_MIN;
+        m_max = MEDIUM_MAX;
+        m_operators = MEDIUM_OPERATORS;
+        m_allowNegativeNbrs = true;
     }
 }
 

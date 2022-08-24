@@ -1,7 +1,6 @@
 #include "calculationwindow.h"
 #include <QInputDialog>
 #include <QIntValidator>
-#include <MainWindow>
 
 void    CalculationWindow::startGame()
 {
@@ -23,8 +22,10 @@ void    CalculationWindow::doCalculation()
 void    CalculationWindow::displayResult()
 {
     m_userInput->hide();
+
     QString resultString = "Final score : " + QString::number(m_score) + "/" + QString::number(m_totalCalculations);
     m_calculationLabel->setText(resultString);
+
     m_buttons[0]->setVisible(true);
     m_buttons[1]->setVisible(true);
 }
@@ -32,9 +33,11 @@ void    CalculationWindow::displayResult()
 void    CalculationWindow::handleResult()
 {
     int result =  m_userInput->text().toInt();
+
     if (result == m_config.getResult())
         m_score++;
     m_userInput->clear();
+
     if (++m_nbCalculations < m_totalCalculations)
         doCalculation();
     else
@@ -53,8 +56,7 @@ void    CalculationWindow::restartGame()
 
 void    CalculationWindow::backToMenu()
 {
-    this->close();
-    m_parent->setVisible(true);
+    emit    gameFinished();
 }
 void    CalculationWindow::createButtons()
 {
@@ -62,6 +64,7 @@ void    CalculationWindow::createButtons()
     m_buttons[0]->setText("Menu");
     m_layout->addWidget(m_buttons[0], Qt::AlignLeft);
     m_buttons[0]->hide();
+    connect(m_buttons[0], &QPushButton::clicked, this, &CalculationWindow::backToMenu);
 
     m_buttons.push_back(new QPushButton(this));
     m_buttons[1]->setText("Play");
@@ -83,12 +86,11 @@ CalculationWindow::CalculationWindow(QString difficulty, QWidget *parent):
 
     m_userInput = new QLineEdit(this);
     m_userInput->setValidator(new QIntValidator(INT_MIN, INT_MAX, this));
-    m_userInput->hide();
+
     connect(m_userInput, &QLineEdit::editingFinished, this, &CalculationWindow::handleResult);
 
     m_calculationLabel = new QLabel();
     m_calculationLabel->setAlignment(Qt::AlignHCenter);
-    m_calculationLabel->hide();
 
     m_layout->addWidget(m_calculationLabel);
     m_layout->addWidget(m_userInput);

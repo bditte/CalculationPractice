@@ -12,14 +12,12 @@ SOURCES += \
     calculationconfig.cpp \
     calculationwindow.cpp \
     main.cpp \
-    mainwindow.cpp \
-    menubutton.cpp
+    mainwindow.cpp
 
 HEADERS += \
     calculationconfig.h \
     calculationwindow.h \
-    mainwindow.h \
-    menubutton.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui

@@ -30,6 +30,9 @@ public:
 
     void    startGame();
 
+signals:
+    void    gameFinished();
+
 private slots:
     void    handleResult();
     void    restartGame();
