@@ -44,7 +44,6 @@ void    CalculationWindow::handleResult()
     if (result == m_config.getResult())
         m_score++;
     m_userInput->clear();
-    qDebug() << m_nbCalculations << " " << m_totalCalculations << "\n" ;
     if (++m_nbCalculations < m_totalCalculations)
         doCalculation();
     else

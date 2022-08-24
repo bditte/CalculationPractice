@@ -28,10 +28,15 @@ public slots:
     void            startCustom();
 
 private:
+    void            setupMenuLayouts();
     void            createCustomButtons(QWidget*);
     QWidget*        createMenu();
+    int             checkUserInput();
 
-    QVBoxLayout*            m_layout;
+    QVBoxLayout*            m_menuLayout;
+    QHBoxLayout*            m_nbGamesLayout;
+    QHBoxLayout*            m_buttonsLayout;
+    QGridLayout*            m_optionsLayout;
     QStackedWidget*         m_pagesWidgets;
     CalculationWindow*      m_customWidget;
     QList<QLineEdit*>       m_userInputs;
