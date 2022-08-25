@@ -113,6 +113,7 @@ CalculationWindow::~CalculationWindow()
 void    CalculationWindow::setMin(int val) { m_config.setMin(val); }
 void    CalculationWindow::setMax(int val) { m_config.setMax(val); }
 void    CalculationWindow::setNbCalculations(int val) { m_totalCalculations = val; }
+void    CalculationWindow::setOperators(const QString& val) { m_config.setOperators(val); }
 
 
 

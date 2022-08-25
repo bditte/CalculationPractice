@@ -27,6 +27,7 @@ public:
     void    setMin(int);
     void    setMax(int);
     void    setNbCalculations(int);
+    void    setOperators(const QString&);
 
     void    startGame();
 

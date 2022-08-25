@@ -27,6 +27,7 @@ public:
 
     void    setMin(const int&);
     void    setMax(const int&);
+    void    setOperators(const QString& );
 
     void                createRandomCalculation();
     const QString&      getCalculationString() const;

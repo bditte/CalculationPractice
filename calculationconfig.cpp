@@ -89,3 +89,4 @@ const QString&      CalculationConfig::getCalculationString() const { return m_C
 
 void    CalculationConfig::setMin(const int& val) { m_min = val; }
 void    CalculationConfig::setMax(const int& val) { m_max = val; }
+void    CalculationConfig::setOperators(const QString& val) { m_operators = val; }

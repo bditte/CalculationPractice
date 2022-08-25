@@ -5,6 +5,7 @@
 #include <QGroupBox>
 #include <QValidator>
 #include <QMessageBox>
+#include <QCheckBox>
 
 MainWindow::MainWindow(QMainWindow *parent):
     QMainWindow(parent),
@@ -90,7 +91,8 @@ void    MainWindow::createCustomButtons(QWidget* menuWidget)
 {
     QLineEdit*  lineEdit;
     QLabel*     label;
-
+    QCheckBox*  checkBox;
+    QFont       font;
     lineEdit = new QLineEdit(menuWidget);
     lineEdit->setValidator(new QIntValidator(INT_MIN, INT_MAX, lineEdit));
     lineEdit->setMaximumWidth(50);
@@ -108,6 +110,36 @@ void    MainWindow::createCustomButtons(QWidget* menuWidget)
     m_optionsLayout->addWidget(lineEdit, 0, 3);
     m_userInputs.push_back(lineEdit);
 
+    label = new QLabel("Operators:");
+    m_optionsLayout->addWidget(label, 1, 0);
+
+    checkBox = new QCheckBox("+", menuWidget);
+    m_optionsLayout->addWidget(checkBox, 1, 1);
+    checkBox->setChecked(true);
+
+    font = checkBox->font();
+    font.setPointSize(14);
+    checkBox->setFont(font);
+    m_userInputs.push_back(checkBox);
+
+    checkBox = new QCheckBox("-", menuWidget);
+    m_optionsLayout->addWidget(checkBox, 1, 2);
+    checkBox->setChecked(true);
+    checkBox->setFont(font);
+    m_userInputs.push_back(checkBox);
+
+    checkBox = new QCheckBox("/", menuWidget);
+    m_optionsLayout->addWidget(checkBox, 1, 3);
+    checkBox->setChecked(true);
+    checkBox->setFont(font);
+    m_userInputs.push_back(checkBox);
+
+    checkBox = new QCheckBox("x", menuWidget);
+    m_optionsLayout->addWidget(checkBox, 1, 4);
+    checkBox->setChecked(true);
+    checkBox->setFont(font);
+    m_userInputs.push_back(checkBox);
+
 }
 
 void    MainWindow::startCustom()
@@ -116,13 +148,18 @@ void    MainWindow::startCustom()
 
     CalculationWindow*  customWidget = dynamic_cast<CalculationWindow*>(m_pagesWidgets->widget(CUSTOM_INDEX));
 
-    if (checkUserInput())
+    if (checkUserInput(customWidget))
         return ;
+    QLineEdit*          userInput;
 
-    int min = m_userInputs[1]->text().toInt();
+    userInput = dynamic_cast<QLineEdit*>(m_userInputs[1]);
+
+    int min = userInput->text().toInt();
     customWidget->setMin(min);
 
-    int max = m_userInputs[2]->text().toInt();
+    userInput = dynamic_cast<QLineEdit*>(m_userInputs[2]);
+
+    int max = userInput->text().toInt();
     customWidget->setMax(max);
 
     if (min > max)
@@ -134,42 +171,74 @@ void    MainWindow::startCustom()
     switchWidget(CUSTOM_INDEX);
 }
 
-int     MainWindow::checkUserInput()
+int     MainWindow::checkUserInput(CalculationWindow* customWidget)
 {
     QMessageBox msgBox;
+    QLineEdit*          userInput;
 
-    if (m_userInputs[1]->text().length() == 0)
+    userInput = dynamic_cast<QLineEdit*>(m_userInputs[1]);
+    if (userInput->text().length() == 0)
     {
         msgBox.setText("Minimum value can't be empty");
         msgBox.exec();
         return (1);
     }
 
-    if (m_userInputs[2]->text().length() == 0)
+    userInput = dynamic_cast<QLineEdit*>(m_userInputs[2]);
+    if (userInput->text().length() == 0)
     {
         msgBox.setText("Maximum value can't be empty");
         msgBox.exec();
         return (1);
     }
+    QString     operators;
+    QCheckBox   *checkBox;
+    for (int i = 3; i < 7; i++)
+    {
+        checkBox = dynamic_cast<QCheckBox*>(m_userInputs[i]);
+        if (checkBox->isChecked())
+            operators += checkBox->text();
+    }
+    if (operators.length() == 0)
+    {
+        msgBox.setText("Atleast one operator must be selected");
+        msgBox.exec();
+        return (1);
+    }
+    customWidget->setOperators(operators);
     return (0);
 }
 
 void    MainWindow::switchWidget(const int& index)
 {
-    if (m_userInputs[0]->text().length() == 0)
+    if (index == MENU_INDEX)
     {
-        QMessageBox msgBox;
+        m_pagesWidgets->setCurrentIndex(index);
+        return ;
+    }
+
+    CalculationWindow*  tmp;
+    QMessageBox         msgBox;
+    QLineEdit*          userInput;
+
+    userInput = dynamic_cast<QLineEdit*>(m_userInputs[0]);
+
+    if (userInput->text().length() == 0)
+    {
         msgBox.setText("Numbers of games can't be empty");
         msgBox.exec();
         return ;
     }
-    CalculationWindow*  tmp;
 
+    int nbGames = userInput->text().toInt();
+    if (nbGames == 0)
+    {
+        msgBox.setText("Numbers of games can't be 0");
+        msgBox.exec();
+        return ;
+    }
     m_pagesWidgets->setCurrentIndex(index);
-
-    int nbGames = m_userInputs[0]->text().toInt();
     tmp = dynamic_cast<CalculationWindow*>(m_pagesWidgets->currentWidget());
-
 
     if (tmp)
     {

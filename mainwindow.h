@@ -31,7 +31,7 @@ private:
     void            setupMenuLayouts();
     void            createCustomButtons(QWidget*);
     QWidget*        createMenu();
-    int             checkUserInput();
+    int             checkUserInput(CalculationWindow*);
 
     QVBoxLayout*            m_menuLayout;
     QHBoxLayout*            m_nbGamesLayout;
@@ -39,7 +39,7 @@ private:
     QGridLayout*            m_optionsLayout;
     QStackedWidget*         m_pagesWidgets;
     CalculationWindow*      m_customWidget;
-    QList<QLineEdit*>       m_userInputs;
+    QList<QWidget*>         m_userInputs;
 
 };
 
