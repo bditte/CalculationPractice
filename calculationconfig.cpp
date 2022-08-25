@@ -29,12 +29,11 @@ void    CalculationConfig::setCalculationString(const int &a, const int &b, cons
 
 int    CalculationConfig::generateRandomNumber() const
 {
-    int res = m_min + QRandomGenerator::global()->generate() % (m_max - m_min + 1);
-    if (m_allowNegativeNbrs)
-    {
-        if (QRandomGenerator::global()->generate() % 2)
-            res *= -1;
-    }
+    int res;
+    if (m_min < 0)
+        res = QRandomGenerator::global()->generate() % (m_max + abs(m_min) + 1) - abs(m_min);
+    else
+        res = QRandomGenerator::global()->generate() % (abs(m_max) - abs(m_min) + 1) + m_min;
     return res;
 }
 
@@ -59,8 +58,7 @@ CalculationConfig::CalculationConfig(const QString& difficulty):
     m_min(2),
     m_max(20),
     m_operators("+-"),
-    m_difficulty(difficulty),
-    m_allowNegativeNbrs(false)
+    m_difficulty(difficulty)
 {
     if (m_difficulty == "Easy")
     {
@@ -73,7 +71,6 @@ CalculationConfig::CalculationConfig(const QString& difficulty):
         m_min = MEDIUM_MIN;
         m_max = MEDIUM_MAX;
         m_operators = MEDIUM_OPERATORS;
-        m_allowNegativeNbrs = true;
     }
 }
 

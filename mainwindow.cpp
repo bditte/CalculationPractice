@@ -173,8 +173,8 @@ void    MainWindow::switchWidget(const int& index)
 
     if (tmp)
     {
-        tmp->startGame();
         tmp->setNbCalculations(nbGames);
+        tmp->startGame();
     }
 }
 

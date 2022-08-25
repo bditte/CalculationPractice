@@ -73,7 +73,7 @@ void    CalculationWindow::createButtons()
     connect(m_buttons[0], &QPushButton::clicked, this, &CalculationWindow::backToMenu);
 
     m_buttons.push_back(new QPushButton(this));
-    m_buttons[1]->setText("Play");
+    m_buttons[1]->setText("Play Again");
     m_layout->addWidget(m_buttons[1], Qt::AlignRight);
     m_buttons[1]->hide();
     connect(m_buttons[1], &QPushButton::pressed, this, &CalculationWindow::restartGame);

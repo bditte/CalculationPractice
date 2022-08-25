@@ -9,7 +9,7 @@
 #define EASY_NB 5
 #define EASY_OPERATORS "+-x"
 
-#define MEDIUM_MIN 2
+#define MEDIUM_MIN -5
 #define MEDIUM_MAX 20
 #define MEDIUM_NB 5
 #define MEDIUM_OPERATORS "+-x"
@@ -44,8 +44,6 @@ private:
     QString     m_operators;
     QString     m_difficulty;
     QString     m_CalculationString;
-
-    bool        m_allowNegativeNbrs;
 
 };
 
