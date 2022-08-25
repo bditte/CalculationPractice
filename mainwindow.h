@@ -13,7 +13,8 @@
 #define MENU_INDEX 0
 #define EASY_INDEX 1
 #define MEDIUM_INDEX 2
-#define CUSTOM_INDEX 3
+#define HARD_INDEX 3
+#define CUSTOM_INDEX 4
 
 
 class MainWindow: public QMainWindow {

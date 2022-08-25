@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     calculationconfig.cpp \
     calculationwindow.cpp \
+    keyenterreceiver.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     calculationconfig.h \
     calculationwindow.h \
+    keyenterreceiver.h \
     mainwindow.h
 
 FORMS += \

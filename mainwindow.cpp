@@ -6,6 +6,7 @@
 #include <QValidator>
 #include <QMessageBox>
 #include <QCheckBox>
+#include "keyenterreceiver.h"
 
 MainWindow::MainWindow(QMainWindow *parent):
     QMainWindow(parent),
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QMainWindow *parent):
     QWidget*                menuWidget = createMenu();
     CalculationWindow*      easyWidget = new CalculationWindow("Easy", this);
     CalculationWindow*      mediumWidget = new CalculationWindow("Medium", this);
+    CalculationWindow*      hardWidget = new CalculationWindow("Hard", this);
     CalculationWindow*      customWidget = new CalculationWindow("Custom", this);
 
     m_customWidget = customWidget;
@@ -28,6 +30,7 @@ MainWindow::MainWindow(QMainWindow *parent):
     m_pagesWidgets->addWidget(menuWidget);
     m_pagesWidgets->addWidget(easyWidget);
     m_pagesWidgets->addWidget(mediumWidget);
+    m_pagesWidgets->addWidget(hardWidget);
     m_pagesWidgets->addWidget(customWidget);
 
     createCustomButtons(menuWidget);
@@ -35,11 +38,13 @@ MainWindow::MainWindow(QMainWindow *parent):
 
     this->setCentralWidget(m_pagesWidgets);
 
-
     connect(easyWidget, &CalculationWindow::gameFinished, this, [this]{ switchWidget(MENU_INDEX); });
     connect(mediumWidget, &CalculationWindow::gameFinished, this, [this]{ switchWidget(MENU_INDEX); });
+    connect(hardWidget, &CalculationWindow::gameFinished, this, [this]{ switchWidget(MENU_INDEX); });
     connect(customWidget, &CalculationWindow::gameFinished, this, [this]{ switchWidget(MENU_INDEX); });
 
+    keyEnterReceived* key = new keyEnterReceived(this);
+    menuWidget->installEventFilter(key);
 }
 
 QWidget*    MainWindow::createMenu()
@@ -64,12 +69,12 @@ QWidget*    MainWindow::createMenu()
     mediumButton->setText("Medium");
     m_buttonsLayout->addWidget(mediumButton);
 
-    QPushButton* customButton = new QPushButton("Custom", menu);
-    m_buttonsLayout->addWidget(customButton);
+    QPushButton* hardButton = new QPushButton("Hard", menu);
+    m_buttonsLayout->addWidget(hardButton);
 
     connect(easyButton, &QPushButton::clicked, this, [this]{ switchWidget(EASY_INDEX); });
     connect(mediumButton, &QPushButton::clicked, this, [this]{ switchWidget(MEDIUM_INDEX); });
-    connect(customButton, &QPushButton::clicked, this, [this]{ startCustom(); });
+    connect(hardButton, &QPushButton::clicked, this, [this]{ switchWidget(HARD_INDEX); });
 
     return menu;
 }
@@ -89,10 +94,12 @@ void    MainWindow::setupMenuLayouts()
 
 void    MainWindow::createCustomButtons(QWidget* menuWidget)
 {
-    QLineEdit*  lineEdit;
-    QLabel*     label;
-    QCheckBox*  checkBox;
-    QFont       font;
+    QLineEdit*      lineEdit;
+    QLabel*         label;
+    QCheckBox*      checkBox;
+    QFont           font;
+    QPushButton*    button;
+
     lineEdit = new QLineEdit(menuWidget);
     lineEdit->setValidator(new QIntValidator(INT_MIN, INT_MAX, lineEdit));
     lineEdit->setMaximumWidth(50);
@@ -139,6 +146,11 @@ void    MainWindow::createCustomButtons(QWidget* menuWidget)
     checkBox->setChecked(true);
     checkBox->setFont(font);
     m_userInputs.push_back(checkBox);
+
+
+    button = new QPushButton("Custom", menuWidget);
+    connect(button, &QPushButton::clicked, this, [this]{ startCustom(); });
+    m_optionsLayout->addWidget(button, 2, 2);
 
 }
 

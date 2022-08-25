@@ -14,6 +14,11 @@
 #define MEDIUM_NB 5
 #define MEDIUM_OPERATORS "+-x"
 
+#define HARD_MIN -50
+#define HARD_MAX 50
+#define HARD_NB 5
+#define HARD_OPERATORS "+-x"
+
 
 class CalculationConfig
 {
@@ -31,6 +36,7 @@ public:
 
     void                createRandomCalculation();
     const QString&      getCalculationString() const;
+
 private:
 
     void    setResult(const int&, const int&, const QChar&);

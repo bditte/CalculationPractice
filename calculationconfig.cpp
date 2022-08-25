@@ -72,6 +72,12 @@ CalculationConfig::CalculationConfig(const QString& difficulty):
         m_max = MEDIUM_MAX;
         m_operators = MEDIUM_OPERATORS;
     }
+    else if (m_difficulty == "Hard")
+    {
+        m_min = HARD_MIN;
+        m_max = HARD_MAX;
+        m_operators = HARD_OPERATORS;
+    }
 }
 
 CalculationConfig::CalculationConfig(const int& min, const int& max):
