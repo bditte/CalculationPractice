@@ -4,6 +4,8 @@
 #include <QString>
 #include <QRandomGenerator>
 
+#include "calculation.h"
+
 #define EASY_MIN 2
 #define EASY_MAX 20
 #define EASY_NB 5
@@ -26,31 +28,27 @@ public:
     CalculationConfig(const QString&);
     CalculationConfig(const int&, const int&);
 
-    const int&     getMin() const;
-    const int&     getMax() const;
-    const long int&     getResult() const;
+    const int&          getMin() const;
+    const int&          getMax() const;
 
     void    setMin(const int&);
     void    setMax(const int&);
     void    setOperators(const QString& );
 
-    void                createRandomCalculation();
-    const QString&      getCalculationString() const;
+    Calculation         createRandomCalculation() const;
 
 private:
 
-    void    setResult(const int&, const int&, const QChar&);
-    void    setCalculationString(const int&, const int&, const QChar&);
-    QChar   getOperator() const;
-    int     generateRandomNumber() const;
+    long int        getResult(const int&, const int&, const QChar&) const;
+    QString         getCalculationString(const int&, const int&, const QChar&) const;
+    QChar           getOperator() const;
+    int             generateRandomNumber() const;
 
     int                   m_min;
     int                   m_max;
-    long int              m_result;
 
     QString     m_operators;
     QString     m_difficulty;
-    QString     m_CalculationString;
 
 };
 

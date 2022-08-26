@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 
+#include "calculation.h"
 #include "calculationconfig.h"
 
 class CalculationWindow: public QGroupBox
@@ -57,6 +58,7 @@ private:
     QList<QPushButton *>    m_buttons;
     QLineEdit*              m_userInput;
     QLabel*                 m_calculationLabel;
+    QList<Calculation>      m_calculations;
 };
 
 #endif // CALCULATIONWINDOW_H

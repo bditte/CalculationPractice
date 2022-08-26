@@ -9,22 +9,20 @@ QChar    CalculationConfig::getOperator() const
     return m_operators[n];
 }
 
-void     CalculationConfig::setResult(const int& a, const int& b, const QChar& op)
+long int     CalculationConfig::getResult(const int& a, const int& b, const QChar& op) const
 {
     if (op == 'x')
-        m_result =  a * b;
+        return a * b;
     else if (op == '/')
-        m_result = a / b;
+        return a / b;
     else if (op == '+')
-        m_result = a + b;
-    else
-        m_result = a - b;
-    return ;
+        return a + b;
+    return a - b;
 }
 
-void    CalculationConfig::setCalculationString(const int &a, const int &b, const QChar &op)
+QString    CalculationConfig::getCalculationString(const int &a, const int &b, const QChar &op) const
 {
-    m_CalculationString = QString::number(a) + " " + op + " " + QString::number(b);
+    return QString::number(a) + " " + op + " " + QString::number(b);
 }
 
 int    CalculationConfig::generateRandomNumber() const
@@ -37,7 +35,7 @@ int    CalculationConfig::generateRandomNumber() const
     return res;
 }
 
-void    CalculationConfig::createRandomCalculation()
+Calculation    CalculationConfig::createRandomCalculation() const
 {
     int a = generateRandomNumber();
     int b = generateRandomNumber();
@@ -50,8 +48,7 @@ void    CalculationConfig::createRandomCalculation()
         b = b > 10 ? b % 10 + 1 : b;
     }
 
-    setResult(a, b, op);
-    setCalculationString(a, b, op);
+    return Calculation(getCalculationString(a, b, op), getResult(a, b, op));
 }
 
 CalculationConfig::CalculationConfig(const QString& difficulty):
@@ -90,8 +87,6 @@ CalculationConfig::CalculationConfig(const int& min, const int& max):
 
 const int&          CalculationConfig::getMin() const { return m_min; };
 const int&          CalculationConfig::getMax() const { return m_max; };
-const long int&     CalculationConfig::getResult() const { return m_result; }
-const QString&      CalculationConfig::getCalculationString() const { return m_CalculationString; }
 
 void    CalculationConfig::setMin(const int& val) { m_min = val; }
 void    CalculationConfig::setMax(const int& val) { m_max = val; }

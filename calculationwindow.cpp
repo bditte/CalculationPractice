@@ -18,12 +18,14 @@ void    CalculationWindow::startGame()
 
 void    CalculationWindow::doCalculation()
 {
-    m_config.createRandomCalculation();
+    Calculation calcul;
 
-    while (m_config.getResult() < INT_MIN && INT_MAX < m_config.getResult())
-        m_config.createRandomCalculation();
+    calcul = m_config.createRandomCalculation();
+    while (calcul.result() < INT_MIN && INT_MAX < calcul.result())
+        calcul = m_config.createRandomCalculation();
 
-    m_calculationLabel->setText(m_config.getCalculationString());
+    m_calculations.push_back(calcul);
+    m_calculationLabel->setText(calcul.calculationString());
 }
 
 void    CalculationWindow::displayResult()
@@ -39,9 +41,9 @@ void    CalculationWindow::displayResult()
 
 void    CalculationWindow::handleResult()
 {
-    int result =  m_userInput->text().toInt();
+    m_calculations[m_nbCalculations].setUserResult(m_userInput->text().toInt());
 
-    if (result == m_config.getResult())
+    if (m_calculations[m_nbCalculations].isCorrect())
         m_score++;
     m_userInput->clear();
     if (++m_nbCalculations < m_totalCalculations)
@@ -55,6 +57,7 @@ void    CalculationWindow::restartGame()
     m_buttons[0]->hide();
     m_buttons[1]->hide();
 
+    m_calculations.clear();
     m_score = 0;
     m_nbCalculations = 0;
     startGame();
