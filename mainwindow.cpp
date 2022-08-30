@@ -12,7 +12,7 @@ MainWindow::MainWindow(QMainWindow *parent):
     QMainWindow(parent),
     m_pagesWidgets(new QStackedWidget(this))
 {
-    resize(150, 100);
+    resize(350, 300);
     this->move(screen()->geometry().center() - frameGeometry().center());
 
     setupMenuLayouts();

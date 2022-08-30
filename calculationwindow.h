@@ -9,6 +9,7 @@
 #include <QList>
 #include <QPushButton>
 #include <QGroupBox>
+#include <QTableWidget>
 
 #include "calculation.h"
 #include "calculationconfig.h"
@@ -59,6 +60,7 @@ private:
     QLineEdit*              m_userInput;
     QLabel*                 m_calculationLabel;
     QList<Calculation>      m_calculations;
+    QTableWidget*           m_resultTable;
 };
 
 #endif // CALCULATIONWINDOW_H
